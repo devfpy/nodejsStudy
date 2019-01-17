@@ -1,6 +1,8 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var socket = require('socket.io');
+var io = socket(server);
 
 app.get('/', (req, res)=>{
     res.send('<h1>Welcome to Realtime Server</h1>');
@@ -66,6 +68,7 @@ io.on('connection', (socket)=>{
     })
 });
 
-http.listen(8000, ()=>{
+
+server.listen(8000, ()=>{
     console.log("Chat Server running at 8000");
 })
