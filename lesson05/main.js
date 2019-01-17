@@ -34,6 +34,26 @@ writerStream.on("error",(error)=>{
     console.log(".... 文件写入异常 "+error.stack);
 })
 
+//获取文件信息
+fs.stat('./input.txt',(err, stats)=>{
+    if(err){
+        console.log(".... 获取文件信息失败 "+err.stack);
+        return;
+    }
+
+    console.log(stats);
+    console.log("读取文件信息成功！");
+
+    console.log("是否是文件："+stats.isFile());
+    console.log("是否是目录："+stats.isDirectory());
+    console.log("是否是块设备："+stats.isBlockDevice());
+    console.log("是否是字节设备："+stats.isCharacterDevice());
+    console.log("是否是软链接："+stats.isSymbolicLink());
+    console.log("是否是FIFO："+stats.isFIFO());
+    console.log("是否是SOCKET："+stats.isSocket());
+    
+});
+
 
 
 
