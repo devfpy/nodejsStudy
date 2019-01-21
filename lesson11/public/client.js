@@ -39,7 +39,13 @@
             }
             return false;
         },
-        genUid: function () {
+        genUid: function (username = "") {
+
+            console.log(".... 当前登录用户 "+username);
+            if(username == "fanpingyang"){
+                return "100002"
+            }
+            
             return new Date().getTime() + "" + Math.floor(Math.random() * 899 + 100);
         },
         //更新系统消息，本例中在用户加入、退出的时候调用
@@ -90,7 +96,7 @@
             客户端根据时间和随机数生成uid,这样使得聊天室用户名称可以重复。
             实际项目中，如果是需要用户登录，那么直接采用用户的uid来做标识就可以
             */
-            this.userid = this.genUid();
+            this.userid = this.genUid(username);
             this.username = username;
 
             d.getElementById("showusername").innerHTML = this.username;

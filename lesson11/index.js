@@ -3,6 +3,7 @@ var app = express();
 var server = require('http').createServer(app);
 var socket = require('socket.io');
 var io = socket(server);
+var _ = require('underscore')._;
 
 app.get('/', (req, res)=>{
     res.send('<h1>Welcome to Realtime Server</h1>');
@@ -65,6 +66,25 @@ io.on('connection', (socket)=>{
         //向所有客户端广播消息
         io.emit('message', obj);
         console.log(obj.username+'说：'+obj.content);
+    })
+
+
+    //向指定的用户发送消息
+    socket.on("messageTo",(obj)=>{
+        
+        let toUserId = obj.toUserId;
+
+        console.log("..... 向指定的用户发送消息 ["+toUserId+"] ");
+
+        console.log(onlineUsers);
+        console.log(onlineUsers[toUserId]);
+
+        if(onlineUsers[toUserId]){
+            //用户存在
+            let toSocket = _.findWhere(io.sockets.sockets, {name:toUserId});
+            toSocket.emit('message', obj);
+        }
+
     })
 });
 
