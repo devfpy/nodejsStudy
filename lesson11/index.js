@@ -4,6 +4,9 @@ var server = require('http').createServer(app);
 var socket = require('socket.io');
 var io = socket(server);
 var _ = require('underscore')._;
+var socketIOStream = require('socket.io-stream');
+var fs = require('fs');
+var path = require('path');
 
 app.get('/', (req, res)=>{
     res.send('<h1>Welcome to Realtime Server</h1>');
@@ -86,6 +89,27 @@ io.on('connection', (socket)=>{
         }
 
     })
+
+    //向指定用户发送文件
+    socket.on("fileTo", (stream, data)=>{
+        console.log('........ 接收到文件');
+        var filename = path.basename(data.name);
+        console.log("........ File Name = ["+filename+"]");    
+        var writerStream = fs.createWriteStream('./receivedfiles/'+filename);
+        fs.writeFileSync('./receivedfiles/'+filename, stream, 'base64');
+
+        let toUserId = data.toUserId;
+        if(onlineUsers[toUserId]){
+
+            data.content = "文件";
+            //用户存在
+            let toSocket = _.findWhere(io.sockets.sockets, {name:toUserId});
+            toSocket.emit('message', data);
+        }
+        
+    })
+
+    
 });
 
 
