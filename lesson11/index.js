@@ -71,6 +71,22 @@ io.on('connection', (socket)=>{
         console.log(obj.username+'说：'+obj.content);
     })
 
+    //监听回执
+    socket.on('messageReceived', (obj)=>{
+        let toUserId = obj.toUserId;
+
+        console.log("..... 向指定的用户发送回执消息 ["+toUserId+"] ");
+
+        console.log(onlineUsers);
+        console.log(onlineUsers[toUserId]);
+
+        if(onlineUsers[toUserId]){
+            //用户存在
+            let toSocket = _.findWhere(io.sockets.sockets, {name:toUserId});
+            toSocket.emit('messageReceived', obj);
+        }
+    })
+
 
     //向指定的用户发送消息
     socket.on("messageTo",(obj)=>{
