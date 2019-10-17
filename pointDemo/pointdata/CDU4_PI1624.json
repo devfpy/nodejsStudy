@@ -1,0 +1,13 @@
+﻿{
+    "Desc": "success",
+    "Msg": "success",
+    "Rows": [
+        {
+            "xData": [],
+            "yData": []
+        }
+    ],
+    "Status": 101,
+    "Success": true,
+    "Total": 1
+}

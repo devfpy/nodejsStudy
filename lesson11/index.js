@@ -75,10 +75,7 @@ io.on('connection', (socket)=>{
     socket.on('messageReceived', (obj)=>{
         let toUserId = obj.toUserId;
 
-        console.log("..... 向指定的用户发送回执消息 ["+toUserId+"] ");
-
-        console.log(onlineUsers);
-        console.log(onlineUsers[toUserId]);
+        console.log("..... 消息发送成功 开始发生回执消息给 ["+toUserId+"] ");
 
         if(onlineUsers[toUserId]){
             //用户存在
@@ -92,11 +89,10 @@ io.on('connection', (socket)=>{
     socket.on("messageTo",(obj)=>{
         
         let toUserId = obj.toUserId;
+        console.log("..... 向指定的用户发送消息 ["+obj.userid+" - "+obj.username+" ] to user ["+toUserId+"]    say: ["+obj.content+"] ");
 
-        console.log("..... 向指定的用户发送消息 ["+toUserId+"] ");
-
-        console.log(onlineUsers);
-        console.log(onlineUsers[toUserId]);
+        // console.log(onlineUsers);
+        // console.log(onlineUsers[toUserId]);
 
         if(onlineUsers[toUserId]){
             //用户存在
